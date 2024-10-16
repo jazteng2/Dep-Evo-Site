@@ -28,7 +28,8 @@ pipeline {
             steps {
                 script {
                     def fullImageName = "${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
-                    bat "docker build -t ${DOCKER_IMAGE_NAME} -f Dockerfile ."                
+                    bat "docker build -t ${DOCKER_IMAGE_NAME} -f Dockerfile ."
+                    bat "docker image tag ${DOCKER_IMAGE_NAME} ${fullImageName}"                
                     bat "docker image push ${fullImageName}"
                     bat "dir"
                 }
