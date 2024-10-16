@@ -46,7 +46,7 @@ pipeline {
                     def fullImageName = "${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
                     def cmd = "docker run -d -p 3000:3000 ${fullImageName}"
                     withCredentials([sshUserPrivateKey(credentialsId: 'AWS_SSH_CRED', keyFileVariable: 'PK')]) {
-                        bat "ssh -i $PK ${EC2_USER}@${EC2_IP} $cmd"
+                        bat "ssh -i $PK ${EC2_USER}@${EC2_IP} docker ps -aq | xargs docker stop | xargs docker rm $cmd"
                     }
                 }
             }
