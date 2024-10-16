@@ -44,7 +44,7 @@ pipeline {
             steps {
                 script {
                     def fullImageName = "${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
-                    def cmd = "docker stop \$(docker ps -a -q); docker rm \$(docker ps -a -q); docker run -d -p 3000:3000 ${fullImageName}"
+                    def cmd = "docker stop \$(docker ps -a -q); docker rm \$(docker ps -a -q); docker run -d -p 3002:3002 ${fullImageName}"
                     withCredentials([sshUserPrivateKey(credentialsId: 'AWS_SSH_CRED', keyFileVariable: 'PK')]) {
                         bat "ssh -i $PK ${EC2_USER}@${EC2_IP} $cmd"
                     }
