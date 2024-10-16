@@ -5,7 +5,7 @@ pipeline {
         DOCKER_USERNAME = 'jazteng2'
         DOCKER_IMAGE_NAME = 'dev-evo-site'
         DOCKER_IMAGE_TAG = 'latest'
-        EC2_IP = '54.196.25.163'
+        EC2_IP = '34.207.77.3'
         EC2_USER = 'ec2-user'
     }
     
@@ -48,7 +48,7 @@ pipeline {
                     // }
 
                     withCredentials([sshUserPrivateKey(credentialsId: 'aws-ec2-ssh', keyFileVariable: 'PK')]) {
-                        bat "ssh -o StrictHostkeyChecking=no ${EC2_USER}@${EC2_IP}"
+                        bat "ssh -i $PK ${EC2_USER}@${EC2_IP}"
                     }
                 }
             }
