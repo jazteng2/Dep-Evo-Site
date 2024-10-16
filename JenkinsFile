@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+    
+    environment {
+        DOCKER_USERNAME = 'jazteng'
+        EC2_USER = 'ec2-user'
+        EC2_IP = ''
+        DOCKER_IMAGE_NAME = 'dev-evo-site'
+        DOCKER_IMAGE_TAG = 'latest'
+        SOURCE_IMAGE_NAME = ''
+    }
+    
+    stages {
+        stage("Clone Repo") {
+            steps {
+                git credentialsid: 'gitcreds', url: 'https://github.com/jazteng2/Dep-Evo-Site.git', branch: 'main'
+                echo "Cloning Repository from Github"
+            }
+        }
+        stage("Check Docker version") {
+            steps {
+                sh 'docker --version'
+                sh 'docker-compose --version'
+                echo "Testing docker setup"
+            }
+        }
+    }
+}
