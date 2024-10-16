@@ -2,12 +2,10 @@ pipeline {
     agent any
     
     environment {
-        DOCKER_USERNAME = 'jazteng'
-        EC2_USER = 'ec2-user'
-        EC2_IP = ''
+        DOCKER_USERNAME = 'jazteng2'
+        DOCKER_CREDS = 'dockerhub-jazteng2-creds'
         DOCKER_IMAGE_NAME = 'dev-evo-site'
         DOCKER_IMAGE_TAG = 'latest'
-        SOURCE_IMAGE_NAME = ''
     }
     
     stages {
@@ -27,11 +25,15 @@ pipeline {
         stage("Build") {
             steps {
                 script {
+                    // Create image
                     def fullImageName = "${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
                     bat "docker build -t ${DOCKER_IMAGE_NAME} -f Dockerfile ."
-                    bat "docker image tag ${DOCKER_IMAGE_NAME} ${fullImageName}"                
-                    bat "docker image push ${fullImageName}"
-                    bat "dir"
+                    bat "docker image tag ${DOCKER_IMAGE_NAME} ${fullImageName}"       
+
+                    // Push image
+                    withCredentials([usernamePassword(credentialsId: ${DOCKER_CREDS}, passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                        bat "echo $DOCKER_PASSWORD | docker login --username=$DOCKER_USERNAME --password-stdin"
+                    }
                 }
             }
         }
