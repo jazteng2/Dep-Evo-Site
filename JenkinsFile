@@ -19,8 +19,8 @@ pipeline {
         }
         stage("Check Docker version") {
             steps {
-                sh 'docker --version'
-                sh 'docker-compose --version'
+                bat 'docker --version'
+                bat 'docker-compose --version'
                 echo "Testing docker setup"
             }
         }
