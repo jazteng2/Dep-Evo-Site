@@ -26,9 +26,11 @@ pipeline {
         }
         stage("Build") {
             steps {
-                def fullImageName = "${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
-                bat "docker build -t ${fullImageName} -f Dockerfile ."                
-                bat "ls"
+                script {
+                    def fullImageName = "${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+                    bat "docker build -t ${fullImageName} -f Dockerfile ."                
+                    bat "ls"
+                }
             }
         }
     }
