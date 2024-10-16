@@ -25,19 +25,19 @@ pipeline {
         }
         stage("Build") {
             steps {
-                script {
-                    // // Create image
-                    // def fullImageName = "${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
-                    // bat "docker build -t ${DOCKER_IMAGE_NAME} -f Dockerfile ."
-                    // bat "docker image tag ${DOCKER_IMAGE_NAME} ${fullImageName}"       
+                // script {
+                //     // Create image
+                //     def fullImageName = "${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+                //     bat "docker build -t ${DOCKER_IMAGE_NAME} -f Dockerfile ."
+                //     bat "docker image tag ${DOCKER_IMAGE_NAME} ${fullImageName}"       
 
-                    // // Push image
-                    // withCredentials([usernamePassword(credentialsId: 'dockerhub-jazteng2-creds', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                    //     // bat "echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin"
-                    //     bat "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-                    //     bat "docker image push ${fullImageName}"
-                    // }
-                }
+                //     // Push image
+                //     withCredentials([usernamePassword(credentialsId: 'dockerhub-jazteng2-creds', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                //         // bat "echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin"
+                //         bat "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+                //         bat "docker image push ${fullImageName}"
+                //     }
+                // }
             }
         }
         stage("Deploy to EC2") {
