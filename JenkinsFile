@@ -5,7 +5,7 @@ pipeline {
         DOCKER_USERNAME = 'jazteng2'
         DOCKER_IMAGE_NAME = 'dev-evo-site'
         DOCKER_IMAGE_TAG = 'latest'
-        EC2_IP = '3.90.106.157'
+        EC2_IP = '54.196.25.163'
         EC2_USER = 'ec2-user'
     }
     
