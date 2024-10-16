@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage("Clone Repo") {
             steps {
-                git credentialsid: 'gitcreds', url: 'https://github.com/jazteng2/Dep-Evo-Site.git', branch: 'main'
+                git credentialsId: 'gitcreds', url: 'https://github.com/jazteng2/Dep-Evo-Site.git', branch: 'main'
                 echo "Cloning Repository from Github"
             }
         }
