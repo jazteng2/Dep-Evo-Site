@@ -43,8 +43,12 @@ pipeline {
         stage("Deploy to EC2") {
             steps {
                 script {
-                    sshagent(credentials: ['aws-ec2-ssh']) {
-                        // bat "ssh -o StrictHostkeyChecking=no ${EC2_USER}@${EC2_IP}"
+                    // sshagent(credentials: ['aws-ec2-ssh']) {
+                    //     bat "ssh -o StrictHostkeyChecking=no ${EC2_USER}@${EC2_IP}"
+                    // }
+
+                    withCredentials([sshUserPrivateKey(credentialsId: 'github', keyFileVariable: 'PK')]) {
+                        bat "ssh -o StrictHostkeyChecking=no ${EC2_USER}@${EC2_IP}"
                     }
                 }
             }
