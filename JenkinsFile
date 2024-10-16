@@ -47,7 +47,7 @@ pipeline {
                     //     bat "ssh -o StrictHostkeyChecking=no ${EC2_USER}@${EC2_IP}"
                     // }
 
-                    withCredentials([sshUserPrivateKey(credentialsId: 'github', keyFileVariable: 'PK')]) {
+                    withCredentials([sshUserPrivateKey(credentialsId: 'aws-ec2-ssh', keyFileVariable: 'PK')]) {
                         bat "ssh -o StrictHostkeyChecking=no ${EC2_USER}@${EC2_IP}"
                     }
                 }
