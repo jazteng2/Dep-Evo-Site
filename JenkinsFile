@@ -31,7 +31,8 @@ pipeline {
 
                     // Push image
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-jazteng2-creds', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                        bat "echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin"
+                        // bat "echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin"
+                        bat "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
                     }
                 }
             }
