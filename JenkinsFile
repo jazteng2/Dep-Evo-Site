@@ -45,8 +45,9 @@ pipeline {
                 script {
                     def fullImageName = "${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
                     def cmd = "docker run -itd --name production -p 3000:3000 ${fullImageName}"
-                    sshagent(credentials: ['aws-ec2-ssh']) {
-                        bat "ssh -i $PK ${EC2_USER}@${EC2_IP}"
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-jazteng2-creds', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                        bat "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+                        bat "docker image push ${fullImageName}"
                     }
                 }
             }
