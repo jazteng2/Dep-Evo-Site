@@ -44,7 +44,7 @@ pipeline {
             steps {
                 script {
                     sshagent(['aws-ec2-ssh']) {
-                        bat "ssh -o StrictHostkeyChecking=no ${EC2_USER}@${EC2_IP}"
+                        // bat "ssh -o StrictHostkeyChecking=no ${EC2_USER}@${EC2_IP}"
                     }
                 }
             }
