@@ -32,11 +32,11 @@ pipeline {
                     bat "docker image tag ${DOCKER_IMAGE_NAME} ${fullImageName}"       
 
                     //Push image
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub-jazteng2-creds', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                        // bat "echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin"
-                        bat "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-                        bat "docker image push ${fullImageName}"
-                    }
+                    // withCredentials([usernamePassword(credentialsId: 'dockerhub-jazteng2-creds', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                    //     // bat "echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin"
+                    //     bat "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+                    //     bat "docker image push ${fullImageName}"
+                    // }
                 }
             }
         }
