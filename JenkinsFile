@@ -31,23 +31,21 @@ pipeline {
                     bat "docker build -t ${DOCKER_IMAGE_NAME} -f Dockerfile ."
                     bat "docker image tag ${DOCKER_IMAGE_NAME} ${fullImageName}"       
 
-                    // Push image
-                    // withCredentials([usernamePassword(credentialsId: 'dockerhub-jazteng2-creds', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                    //     // bat "echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin"
-                    //     bat "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-                    //     bat "docker image push ${fullImageName}"
-                    // }
+                    //Push image
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-jazteng2-creds', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                        // bat "echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin"
+                        bat "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+                        bat "docker image push ${fullImageName}"
+                    }
                 }
             }
         }
         stage("Deploy to EC2") {
             steps {
                 script {
-                    // sshagent(credentials: ['aws-ec2-ssh']) {
-                    //     bat "ssh -o StrictHostkeyChecking=no ${EC2_USER}@${EC2_IP}"
-                    // }
-
-                    withCredentials([sshUserPrivateKey(credentialsId: 'aws-ec2-ssh', keyFileVariable: 'PK')]) {
+                    def fullImageName = "${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+                    def cmd = "docker run -itd --name production -p 3000:3000 ${fullImageName}"
+                    sshagent(credentials: ['aws-ec2-ssh']) {
                         bat "ssh -i $PK ${EC2_USER}@${EC2_IP}"
                     }
                 }
