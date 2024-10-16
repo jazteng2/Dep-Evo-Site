@@ -5,7 +5,7 @@ pipeline {
         DOCKER_USERNAME = 'jazteng2'
         DOCKER_IMAGE_NAME = 'dev-evo-site'
         DOCKER_IMAGE_TAG = 'latest'
-        EC2_IP = '34.207.77.3'
+        EC2_IP = '34.229.41.139'
         EC2_USER = 'ec2-user'
     }
     
@@ -44,10 +44,9 @@ pipeline {
             steps {
                 script {
                     def fullImageName = "${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
-                    def cmd = "docker run -itd --name production -p 3000:3000 ${fullImageName}"
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub-jazteng2-creds', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                        bat "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-                        bat "docker image push ${fullImageName}"
+                    def cmd = "docker run -itd --name production-container -p 3000:3000 ${fullImageName}"
+                    withCredentials([sshUserPrivateKey(credentialsId: 'AWS_CRED', keyFileVariable: 'PK')]) {
+                        bat "ssh -i $PK ${EC2_USER}@${EC2_IP}"
                     }
                 }
             }
