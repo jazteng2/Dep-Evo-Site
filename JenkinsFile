@@ -32,7 +32,7 @@ pipeline {
 
                     // Push image
                     withCredentials([usernamePassword(credentialsId: ${DOCKER_CREDS}, passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                        bat "echo $DOCKER_PASSWORD | docker login --username=$DOCKER_USERNAME --password-stdin"
+                        bat "echo \$DOCKER_PASSWORD | docker login --username \$DOCKER_USERNAME --password-stdin"
                     }
                 }
             }
